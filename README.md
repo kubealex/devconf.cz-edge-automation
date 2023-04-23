@@ -1,0 +1,1 @@
+# devconf.cz-edge-automation
