@@ -1,0 +1,5 @@
+resources:
+  - sensor-simulator-deployment.yml
+  - sensor-simulator-svc.yml
+
+namespace: devconf-demo

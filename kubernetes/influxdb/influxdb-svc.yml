@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: influxdb
+  namespace: devconf-demo
+  labels:
+    app: influxdb
+    app.kubernetes.io/component: influxdb
+    app.kubernetes.io/instance: influxdb
+    app.kubernetes.io/name: influxdb
+    app.kubernetes.io/part-of: iot-sensor-simulator
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8086-tcp
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app: influxdb
+    deployment: influxdb

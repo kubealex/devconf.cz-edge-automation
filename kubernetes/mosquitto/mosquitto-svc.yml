@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mosquitto
+  namespace: devconf-demo
+  labels:
+    app: mosquitto
+spec:
+  ports:
+    - name: 1883-tcp
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+  type: ClusterIP
+  selector:
+    app: mosquitto
+    deployment: mosquitto

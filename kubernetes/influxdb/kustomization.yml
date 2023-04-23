@@ -1,0 +1,17 @@
+resources:
+  - influxdb-deployment.yml
+  - influxdb-svc.yml
+  - influxdb-pvc.yml
+
+secretGenerator:
+  - name: influxdb-init
+    literals:
+      - DOCKER_INFLUXDB_INIT_USERNAME=influxdb-user
+      - DOCKER_INFLUXDB_INIT_PASSWORD=redhat2023
+      - DOCKER_INFLUXDB_INIT_ORG=devconf-demo
+      - DOCKER_INFLUXDB_INIT_BUCKET=devconf-demo
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+generatorOptions:
+  disableNameSuffixHash: true
+
+namespace: devconf-demo

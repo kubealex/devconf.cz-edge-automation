@@ -1,0 +1,30 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-sensor-aggregator
+  namespace: devconf-demo
+  labels:
+    app: iot-sensor-aggregator
+    app.kubernetes.io/component: iot-sensor-aggregator
+    app.kubernetes.io/instance: iot-sensor-aggregator
+    app.kubernetes.io/name: iot-sensor-aggregator
+    app.kubernetes.io/part-of: iot-sensor-simulator
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 8443-tcp
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+    - name: 8778-tcp
+      protocol: TCP
+      port: 8778
+      targetPort: 8778
+  type: ClusterIP
+  selector:
+    app: iot-sensor-aggregator
+    deployment: iot-sensor-aggregator

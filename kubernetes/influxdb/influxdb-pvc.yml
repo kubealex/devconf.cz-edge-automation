@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: influxdb-storage
+  namespace: devconf-demo
+spec:
+
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+
+  volumeMode: Filesystem

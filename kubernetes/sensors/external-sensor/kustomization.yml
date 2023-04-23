@@ -1,0 +1,77 @@
+bases:
+  - ../base
+patches:
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: iot-sensor-external
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/labels/app"
+        value: iot-sensor-external
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/selector/matchLabels/app"
+        value: iot-sensor-external
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/template/metadata/labels/app"
+        value: iot-sensor-external
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: iot-sensor-external
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/selector/app"
+        value: iot-sensor-external
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/labels/app"
+        value: iot-sensor-external
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/envFrom/0/configMapRef/name"
+        value: iot-sensor-external
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+configMapGenerator:
+  - name: iot-sensor-external
+    namespace: devconf-demo
+    literals:
+      - sensor.location=fridge-room-c1-outdoor
+      - sensor.device-id=ext-01
+      - sensor.temperature=27
+      - sensor.humidity=60
+generatorOptions:
+  disableNameSuffixHash: true

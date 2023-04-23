@@ -1,0 +1,77 @@
+bases:
+  - ../base
+patches:
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: iot-sensor-internal
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/labels/app"
+        value: iot-sensor-internal
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/selector/matchLabels/app"
+        value: iot-sensor-internal
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/template/metadata/labels/app"
+        value: iot-sensor-internal
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: iot-sensor-internal
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/selector/app"
+        value: iot-sensor-internal
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/metadata/labels/app"
+        value: iot-sensor-internal
+    target:
+      kind: Service
+      name: iot-sensor-simulator
+
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/envFrom/0/configMapRef/name"
+        value: iot-sensor-internal
+    target:
+      kind: Deployment
+      name: iot-sensor-simulator
+
+configMapGenerator:
+  - name: iot-sensor-internal
+    namespace: devconf-demo
+    literals:
+      - sensor.location=fridge-room-c1-indoor
+      - sensor.device-id=int-01
+      - sensor.temperature=18
+      - sensor.humidity=35
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-sensor-simulator
+  namespace: devconf-demo
+  labels:
+    app: iot-sensor-simulator
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: iot-sensor-simulator

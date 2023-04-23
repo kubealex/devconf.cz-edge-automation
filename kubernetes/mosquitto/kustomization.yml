@@ -1,0 +1,12 @@
+resources:
+  - mosquitto-deployment.yml
+  - mosquitto-svc.yml
+
+configMapGenerator:
+  - name: mosquitto-config
+    files:
+      - mosquitto.conf
+generatorOptions:
+  disableNameSuffixHash: true
+
+namespace: devconf-demo
