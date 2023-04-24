@@ -1,0 +1,12 @@
+---
+- name: Devconf-demo | Acknowledge anomaly
+  hosts: localhost
+  tasks:
+    - name: Devconf-demo | Print event data
+      ansible.builtin.debug:
+        msg:
+          - "Sensor location: {{ event.sensor_location }}"
+          - "Sensor ID: {{ event.sensor_id }}"
+          - "Sensor event type: {{ event.sensor_event_type }}"
+          - "Sensor temperature delta: {{ event.sensor_temperature_delta }}"
+

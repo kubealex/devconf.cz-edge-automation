@@ -1,0 +1,14 @@
+---
+- name: Hello Events
+  hosts: all
+  sources:
+    - ansible.eda.mqtt:
+        host: mosquitto
+        port: 1883
+        topic: anomaly-data-out
+  rules:
+    - name: Debug connection
+      condition: event.sensor_location is defined
+      action:
+        run_playbook:
+          name: playbooks/acknowledge_anomaly.yml
