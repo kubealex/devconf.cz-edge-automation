@@ -17,8 +17,9 @@ spec:
         deployment: influxdb
     spec:
       volumes:
-        - name: influxdb-1
-          emptyDir: {}
+        - name: influxdb-cache
+          persistentVolumeClaim:
+            claimName: influxdb-cache
         - name: influxdb-storage
           persistentVolumeClaim:
             claimName: influxdb-storage
@@ -34,7 +35,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           volumeMounts:
-            - name: influxdb-1
+            - name: influxdb-cache
               mountPath: /etc/influxdb2
             - name: influxdb-storage
               mountPath: /var/lib/influxdb2
