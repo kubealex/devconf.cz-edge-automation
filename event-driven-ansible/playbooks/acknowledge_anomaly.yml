@@ -10,3 +10,71 @@
           - "Sensor event type: {{ event.sensor_event_type }}"
           - "Sensor temperature delta: {{ event.sensor_temperature_delta }}"
 
+    - name: Check info
+      kubernetes.core.k8s_info:
+        kubeconfig: /home/alerossi/microshift-dev/kubeconfig
+        kind: ConfigMap
+        name: "{{ item }}"
+        namespace: devconf-demo
+      register: cm_out
+      loop:
+        - iot-sensor-internal
+        - iot-sensor-floor
+        - iot-sensor-fridge
+
+    - name: Set sensor settings as facts
+      ansible.builtin.set_fact:
+        sensor_internal: "{{ cm_out.results.0.resources.0 }}"
+        sensor_floor: "{{ cm_out.results.1.resources.0 }}"
+        sensor_fridge: "{{ cm_out.results.2.resources.0 }}"
+
+    - name: Set sensors values as facts
+      ansible.builtin.set_fact:
+        sensor_internal_temperature: "{{ sensor_internal.data['sensor.temperature'] }}"
+        sensor_internal_humidity: "{{ sensor_internal.data['sensor.humidity'] }}"
+        sensor_floor_temperature: "{{ sensor_floor.data['sensor.temperature'] }}"
+        sensor_floor_humidity: "{{ sensor_floor.data['sensor.humidity'] }}"
+        sensor_fridge_fan_speed: "{{ sensor_fridge.data['sensor.fan-speed'] }}"
+        sensor_fridge_eco_mode: "{{ sensor_fridge.data['sensor.eco-mode'] }}"
+        sensor_fridge_temperature: "{{ sensor_fridge.data['sensor.temperature'] }}"
+        sensor_fridge_fixed_temperature: "{{ sensor_fridge.data['sensor.fixed-temperature'] }}"
+        sensor_fridge_power_consumption: "{{ sensor_fridge.data['sensor.power-consumption'] }}"
+
+    - name: React to temperature changes
+      ansible.builtin.debug:
+        msg:
+          - "{{ item.sensor_name }}"
+          - "{{ item.sensor_fixed_temperature }}"
+          - "{{ item.sensor_temperature }}"
+          - "{{ item.sensor_power_consumption }}"
+          - "{{ item.sensor_fan_speed }}"
+          - "{{ item.sensor_eco_mode }}"
+      loop:
+        - sensor_name: iot-sensor-fridge
+          sensor_fixed_temperature: "{{ sensor_fridge_fixed_temperature | int - event.sensor_temperature_delta | int % 2 }}"
+          sensor_temperature: "{{ sensor_fridge_temperature | int - event.sensor_temperature_delta | int % 4 }}"
+          sensor_power_consumption: "{{ sensor_fridge_power_consumption | int + event.sensor_temperature_delta | int * 50 }}"
+          sensor_fan_speed: "{{ sensor_fridge_power_consumption | int + event.sensor_temperature_delta | int * 30 }}"
+          sensor_eco_mode: "{{ false if event.sensor_temperature_delta > 1 else true }}"
+
+    - name: Print modded temperature
+      ansible.builtin.debug:
+        msg: "{{ (item | float + event.sensor_temperature_delta | float) | round(0, 'common') | int }}"
+      loop:
+        - "{{ sensor_floor_temperature }}"
+        - "{{ sensor_internal_temperature }}"
+        - "{{ sensor_fridge_temperature }}"
+
+    - name: Print modded humidity
+      ansible.builtin.debug:
+        msg: "{{ (item | float + (event.sensor_temperature_delta | float) * 2.5) | round(0, 'common') | int }}"
+      loop:
+        - "{{ sensor_floor_humidity }}"
+        - "{{ sensor_internal_humidity }}"
+
+    - name: Set new working values of the fridge
+      ansible.builtin.debug:
+        msg: "{{ (item | int + (event.sensor_temperature_delta | float * 100)) | round(0, 'common') | int }}"
+      loop:
+        - "{{ sensor_fridge_fan_speed }}"
+        - "{{ sensor_fridge_power_consumption }}"
