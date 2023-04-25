@@ -4,11 +4,22 @@ metadata:
   name: influxdb-storage
   namespace: devconf-demo
 spec:
-
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
-
+      storage: 1Gi
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: influxdb-cache
+  namespace: devconf-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
   volumeMode: Filesystem
