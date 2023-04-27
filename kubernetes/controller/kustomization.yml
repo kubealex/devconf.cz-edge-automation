@@ -1,0 +1,26 @@
+resources:
+  - sensor-controller-deployment.yml
+  - sensor-controller-svc.yml
+  - sensor-controller-rbac.yml
+
+secretGenerator:
+  - name: iot-sensor-controller-influxdb
+    namespace: devconf-demo
+    literals:
+      - influxdb.url=http://influxdb:8086
+      - influxdb.bucket=devconf-demo
+      - influxdb.token=n5gy4_nwSwuw7rK1C-2n307hSSznUvJ0uPwhQShImzgKO782_CfYZTv8xwM4l9ECdNGifP4IAEuVQjgruIcafA==
+      - influxdb.organization=devconf-demo
+configMapGenerator:
+  - name: sensor-controller-config
+    namespace: devconf-demo
+    literals:
+      - sensor.location=fridge-room-c1-outdoor
+      - sensor.device-id=ext-01
+      - sensor.threshold=29
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+
+namespace: devconf-demo

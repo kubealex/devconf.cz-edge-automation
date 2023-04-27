@@ -1,0 +1,4 @@
+resources:
+  - eda-deployment.yml
+
+namespace: devconf-demo

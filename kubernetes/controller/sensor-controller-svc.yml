@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: iot-sensor-controller
+  namespace: devconf-demo
+  labels:
+    app: iot-sensor-controller
+    app.kubernetes.io/component: iot-sensor-controller
+    app.kubernetes.io/instance: iot-sensor-controller
+    app.kubernetes.io/name: iot-sensor-controller
+    app.kubernetes.io/part-of: iot-sensor-simulator
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: iot-sensor-controller
+    deployment: iot-sensor-controller
