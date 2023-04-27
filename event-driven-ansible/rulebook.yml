@@ -1,8 +1,8 @@
 ---
-- name: Hello Events
+- name: Wait for sensor events
   hosts: all
   sources:
-    - ansible.eda.mqtt:
+    - kubealex.eda.mqtt:
         host: mosquitto
         port: 1883
         topic: anomaly-data-out
