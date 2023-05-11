@@ -7,7 +7,7 @@ data:
   sensor.device-id: ext-01
   sensor.humidity: '40'
   sensor.location: fridge-room-c1-outdoor
-  sensor.temperature: '33'
+  sensor.fixed-temperature: '33'
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -18,7 +18,7 @@ data:
   sensor.device-id: floor-01
   sensor.humidity: '25'
   sensor.location: fridge-room-c1-floor
-  sensor.temperature: '14'
+  sensor.fixed-temperature: '14'
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -29,4 +29,4 @@ data:
   sensor.device-id: int-01
   sensor.humidity: '25'
   sensor.location: fridge-room-c1-indoor
-  sensor.temperature: '21'
+  sensor.fixed-temperature: '21'

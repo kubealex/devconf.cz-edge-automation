@@ -71,7 +71,7 @@ configMapGenerator:
     literals:
       - sensor.location=fridge-room-c1-outdoor
       - sensor.device-id=ext-01
-      - sensor.temperature=27
+      - sensor.fixed-temperature=27
       - sensor.humidity=60
 generatorOptions:
   disableNameSuffixHash: true

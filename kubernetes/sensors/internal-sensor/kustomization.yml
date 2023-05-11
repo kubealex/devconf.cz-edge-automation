@@ -71,7 +71,7 @@ configMapGenerator:
     literals:
       - sensor.location=fridge-room-c1-indoor
       - sensor.device-id=int-01
-      - sensor.temperature=18
+      - sensor.fixed-temperature=18
       - sensor.humidity=35
 generatorOptions:
   disableNameSuffixHash: true

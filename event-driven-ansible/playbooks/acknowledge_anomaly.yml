@@ -30,13 +30,13 @@
 
     - name: Set sensors values as facts
       ansible.builtin.set_fact:
-        sensor_internal_temperature: "{{ sensor_internal.data['sensor.temperature'] }}"
+        sensor_internal_temperature: "{{ sensor_internal.data['sensor.fixed-temperature'] }}"
         sensor_internal_humidity: "{{ sensor_internal.data['sensor.humidity'] }}"
-        sensor_floor_temperature: "{{ sensor_floor.data['sensor.temperature'] }}"
+        sensor_floor_temperature: "{{ sensor_floor.data['sensor.fixed-temperature'] }}"
         sensor_floor_humidity: "{{ sensor_floor.data['sensor.humidity'] }}"
         sensor_fridge_fan_speed: "{{ sensor_fridge.data['sensor.fan-speed'] }}"
         sensor_fridge_eco_mode: "{{ sensor_fridge.data['sensor.eco-mode'] }}"
-        sensor_fridge_temperature: "{{ sensor_fridge.data['sensor.temperature'] }}"
+        sensor_fridge_temperature: "{{ sensor_fridge.data['sensor.fixed-temperature'] }}"
         sensor_fridge_fixed_temperature: "{{ sensor_fridge.data['sensor.fixed-temperature'] }}"
         sensor_fridge_power_consumption: "{{ sensor_fridge.data['sensor.power-consumption'] }}"
 
@@ -48,7 +48,7 @@
         name: "{{ item.sensor_name }}"
         patch:
           - op: replace
-            path: /data/sensor.temperature
+            path: /data/sensor.fixed-temperature
             value: "{{ item.sensor_temperature }}"
           - op: replace
             path: /data/sensor.fixed-temperature

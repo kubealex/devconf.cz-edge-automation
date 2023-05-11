@@ -73,7 +73,7 @@ configMapGenerator:
       - sensor.device-id=fridge-01
       - sensor.fan-speed=20
       - sensor.eco-mode=true
-      - sensor.temperature=-8
+      - sensor.fixed-temperature=-8
       - sensor.fixed-temperature=-8
       - sensor.power-consumption=120
 generatorOptions:
