@@ -52,20 +52,20 @@
         kubeconfig: "/eda-ansible/kubeconfig"
         kind: ConfigMap
         namespace: devconf-demo
-        name: "{{ item.sensor_name }}"
+        name: "{{ sensor_name }}"
         patch:
           - op: replace
             path: /data/sensor.fixed-temperature
-            value: "{{ item.sensor_fixed_temperature }}"
+            value: "{{ sensor_fixed_temperature }}"
           - op: replace
             path: /data/sensor.fan-speed
-            value: "{{ item.sensor_fan_speed }}"
+            value: "{{ sensor_fan_speed }}"
           - op: replace
             path: /data/sensor.power-consumption
-            value: "{{ item.sensor_power_consumption }}"
+            value: "{{ sensor_power_consumption }}"
           - op: replace
             path: /data/sensor.eco-mode
-            value: "{{ item.sensor_eco_mode }}"
+            value: "{{ sensor_eco_mode }}"
       loop:
 
     - name: Restart sensor
