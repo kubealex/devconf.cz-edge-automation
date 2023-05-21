@@ -64,8 +64,7 @@
             value: "{{ item.sensor_eco_mode }}"
       loop:
         - sensor_name: iot-sensor-fridge
-          sensor_fixed_temperature: "{{ sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int % 2) }}"
-          sensor_temperature: "{{ sensor_fridge_temperature | int - (ansible_eda.event.sensor_temperature_delta | int % 4) }}"
+          sensor_fixed_temperature: "{{ sensor_fridge_temperature | int - (ansible_eda.event.sensor_temperature_delta | int % 4) }}"
           sensor_power_consumption: "{{ sensor_fridge_power_consumption | int + ansible_eda.event.sensor_temperature_delta | int * 50 }}"
           sensor_fan_speed: "{{ sensor_fridge_power_consumption | int + ansible_eda.event.sensor_temperature_delta | int * 30 }}"
           sensor_eco_mode: "{{ 'false' if ansible_eda.event.sensor_temperature_delta > 1 else 'true' }}"
