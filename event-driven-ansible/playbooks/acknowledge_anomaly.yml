@@ -39,34 +39,31 @@
         sensor_fridge_fixed_temperature: "{{ sensor_fridge.data['sensor.fixed-temperature'] }}"
         sensor_fridge_power_consumption: "{{ sensor_fridge.data['sensor.power-consumption'] }}"
 
-    - name: Set fixed values as facts
-      ansible.builtin.set_fact:
-        sensor_name: iot-sensor-fridge
-        sensor_fixed_temperature: "{{ sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int) }}"
-        sensor_power_consumption: "{{ sensor_fridge_power_consumption | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
-        sensor_fan_speed: "{{ sensor_fridge_fan_speed | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
-        sensor_eco_mode: "{{ 'false' if (sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int)) | int < -8 | int else 'true' }}"
-
     - name: React to temperature changes
       kubernetes.core.k8s_json_patch:
         kubeconfig: "/eda-ansible/kubeconfig"
         kind: ConfigMap
         namespace: devconf-demo
-        name: "{{ sensor_name }}"
+        name: "{{ item.sensor_name }}"
         patch:
           - op: replace
             path: /data/sensor.fixed-temperature
-            value: "{{ sensor_fixed_temperature }}"
+            value: "{{ item.sensor_fixed_temperature }}"
           - op: replace
             path: /data/sensor.fan-speed
-            value: "{{ sensor_fan_speed }}"
+            value: "{{ item.sensor_fan_speed }}"
           - op: replace
             path: /data/sensor.power-consumption
-            value: "{{ sensor_power_consumption }}"
+            value: "{{ item.sensor_power_consumption }}"
           - op: replace
             path: /data/sensor.eco-mode
-            value: "{{ sensor_eco_mode }}"
+            value: "{{ item.sensor_eco_mode }}"
       loop:
+        - sensor_name: iot-sensor-fridge
+          sensor_fixed_temperature: "{{ sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int) }}"
+          sensor_power_consumption: "{{ sensor_fridge_power_consumption | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
+          sensor_fan_speed: "{{ sensor_fridge_fan_speed | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
+          sensor_eco_mode: "{{ 'false' if (sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int)) | int < -8 else 'true' }}"
 
     - name: Restart sensor
       kubernetes.core.k8s:
