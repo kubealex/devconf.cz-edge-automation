@@ -23,10 +23,14 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
+          securityContext:
+            privileged: true
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}
+      serviceAccount: eda-admin
+      serviceAccountName: eda-admin
       schedulerName: default-scheduler
   strategy:
     type: RollingUpdate
