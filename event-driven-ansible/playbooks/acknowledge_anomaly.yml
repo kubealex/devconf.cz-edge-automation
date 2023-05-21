@@ -63,7 +63,7 @@
           sensor_fixed_temperature: "{{ sensor_fridge_fixed_temperature | int - (ansible_eda.event.sensor_temperature_delta | int) }}"
           sensor_power_consumption: "{{ sensor_fridge_power_consumption | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
           sensor_fan_speed: "{{ sensor_fridge_fan_speed | int + (ansible_eda.event.sensor_temperature_delta | int * 100) }}"
-          sensor_eco_mode: "{{ 'false' if (sensor_fridge_fixed_temperature | int + (ansible_eda.event.sensor_temperature_delta | int % 4)) < -8 else 'true' }}"
+          sensor_eco_mode: "{{ 'false' if (sensor_fridge_fixed_temperature | int + (ansible_eda.event.sensor_temperature_delta | int)) < -8 else 'true' }}"
 
     - name: Restart sensor
       kubernetes.core.k8s:
