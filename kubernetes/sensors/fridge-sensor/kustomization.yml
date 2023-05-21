@@ -74,7 +74,6 @@ configMapGenerator:
       - sensor.fan-speed=20
       - sensor.eco-mode=true
       - sensor.fixed-temperature=-8
-      - sensor.fixed-temperature=-8
       - sensor.power-consumption=120
 generatorOptions:
   disableNameSuffixHash: true
