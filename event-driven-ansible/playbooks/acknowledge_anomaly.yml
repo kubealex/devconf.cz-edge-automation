@@ -49,9 +49,6 @@
         patch:
           - op: replace
             path: /data/sensor.fixed-temperature
-            value: "{{ item.sensor_temperature }}"
-          - op: replace
-            path: /data/sensor.fixed-temperature
             value: "{{ item.sensor_fixed_temperature }}"
           - op: replace
             path: /data/sensor.fan-speed
