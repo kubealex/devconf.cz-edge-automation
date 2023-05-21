@@ -74,7 +74,6 @@
       kubernetes.core.k8s:
         kubeconfig: "/eda-ansible/kubeconfig"
         kind: Pod
-        name: iot-sensor-fridge
         namespace: devconf-demo
         label_selectors:
           - app=iot-sensor-fridge
