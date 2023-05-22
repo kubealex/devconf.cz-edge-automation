@@ -71,9 +71,9 @@ configMapGenerator:
     literals:
       - sensor.location=fridge-room-c1-fridge
       - sensor.device-id=fridge-01
-      - sensor.fan-speed=20
+      - sensor.fan-speed=150
       - sensor.eco-mode=true
       - sensor.fixed-temperature=-8
-      - sensor.power-consumption=120
+      - sensor.power-consumption=200
 generatorOptions:
   disableNameSuffixHash: true

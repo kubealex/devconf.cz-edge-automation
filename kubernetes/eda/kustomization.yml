@@ -1,5 +1,4 @@
 resources:
-  - eda-rbac.yml
   - eda-deployment.yml
 
 namespace: devconf-demo

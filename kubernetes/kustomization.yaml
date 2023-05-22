@@ -1,0 +1,8 @@
+resources:
+  - ./mosquitto
+  - ./influxdb
+  - ./sensors
+  - ./aggregator
+  - ./controller
+  - ./eda
+  - ./demo-rbac.yml

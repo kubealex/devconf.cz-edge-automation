@@ -1,7 +1,6 @@
 resources:
   - sensor-aggregator-deployment.yml
   - sensor-aggregator-svc.yml
-  - sensor-aggregator-rbac.yml
 
 secretGenerator:
   - name: iot-sensor-aggregator-influxdb
@@ -9,7 +8,8 @@ secretGenerator:
     literals:
       - influxdb.url=http://influxdb:8086
       - influxdb.bucket=devconf-demo
-      - influxdb.token=<TOKEN_PLACEHOLDER>
+      - influxdb.token=mjUpPrlbBLBojJ1gXnMsNjdCEwX0ggK9YlAxX9trDM2iP7qNCYYaVrMyRUtVzd2GdEhJsMuW8Ku3-GUHrOZeHA==
+      # - influxdb.token=<TOKEN_PLACEHOLDER>
       - influxdb.organization=devconf-demo
 generatorOptions:
   disableNameSuffixHash: true

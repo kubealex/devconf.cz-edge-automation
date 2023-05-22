@@ -11,6 +11,7 @@ secretGenerator:
       - DOCKER_INFLUXDB_INIT_ORG=devconf-demo
       - DOCKER_INFLUXDB_INIT_BUCKET=devconf-demo
       - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mjUpPrlbBLBojJ1gXnMsNjdCEwX0ggK9YlAxX9trDM2iP7qNCYYaVrMyRUtVzd2GdEhJsMuW8Ku3-GUHrOZeHA==
 generatorOptions:
   disableNameSuffixHash: true
 

@@ -1,7 +1,6 @@
 resources:
   - sensor-controller-deployment.yml
   - sensor-controller-svc.yml
-  - sensor-controller-rbac.yml
 
 secretGenerator:
   - name: iot-sensor-controller-influxdb
@@ -9,7 +8,8 @@ secretGenerator:
     literals:
       - influxdb.url=http://influxdb:8086
       - influxdb.bucket=devconf-demo
-      - influxdb.token=n5gy4_nwSwuw7rK1C-2n307hSSznUvJ0uPwhQShImzgKO782_CfYZTv8xwM4l9ECdNGifP4IAEuVQjgruIcafA==
+      - influxdb.token=mjUpPrlbBLBojJ1gXnMsNjdCEwX0ggK9YlAxX9trDM2iP7qNCYYaVrMyRUtVzd2GdEhJsMuW8Ku3-GUHrOZeHA==
+      # - influxdb.token=<TOKEN_PLACEHOLDER>
       - influxdb.organization=devconf-demo
 configMapGenerator:
   - name: sensor-controller-config
