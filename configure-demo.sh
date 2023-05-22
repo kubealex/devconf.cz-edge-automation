@@ -1,5 +1,6 @@
 #!/bin/bash
-KUBECONFIG=~/microshift
+KUBECONFIG=$(pwd)/kubeconfig
+export KUBECONFIG=$(pwd)/kubeconfig
 
 cat << EOF | oc apply -f -
 apiVersion: v1
@@ -15,3 +16,4 @@ metadata:
   name: devconf-demo
 EOF
 oc adm policy add-scc-to-user -z eda-admin privileged -n devconf-demo
+oc apply -k kubernetes
