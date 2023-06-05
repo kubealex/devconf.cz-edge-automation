@@ -16,6 +16,7 @@
         kind: ConfigMap
         name: "{{ item }}"
         namespace: devconf-demo
+        validate_certs: false
       register: cm_out
       loop:
         - iot-sensor-internal
@@ -45,6 +46,7 @@
         kind: ConfigMap
         namespace: devconf-demo
         name: "{{ item.sensor_name }}"
+        validate_certs: false
         patch:
           - op: replace
             path: /data/sensor.fixed-temperature
@@ -70,6 +72,7 @@
         kubeconfig: "/eda-ansible/kubeconfig"
         kind: Pod
         namespace: devconf-demo
+        validate_certs: false
         label_selectors:
           - app=iot-sensor-fridge
         state: absent
