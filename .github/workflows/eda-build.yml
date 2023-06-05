@@ -1,0 +1,41 @@
+name: Quarkus native build
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'event-driven-ansible/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'event-driven-ansible/**'
+
+jobs:
+  build:
+    name: Build Quarkus application and push image
+    env:
+      working-directory: ./event-driven-ansible
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build EDA image
+      id: build-image-ansible
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: iot-eda
+        tags: latest
+        containerfiles: ./${{ env.working-directory }}/Containerfile
+        context: ./${{ env.working-directory }}
+
+    - name: Push To quay.io
+      id: push-x86
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-image.outputs.image }}
+        tags: latest
+        registry: quay.io/kubealex
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_TOKEN }}
