@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build Quarkus application and push image
+    name: Build EDA bits and push image to Quay.
     env:
       working-directory: ./event-driven-ansible
     defaults:
