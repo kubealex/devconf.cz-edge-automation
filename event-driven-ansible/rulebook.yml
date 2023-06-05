@@ -7,7 +7,7 @@
         port: 1883
         topic: anomaly-data-out
   rules:
-    - name: Debug connection
+    - name: Resolve anomaly
       condition: event.sensor_location is defined
       action:
         run_playbook:
