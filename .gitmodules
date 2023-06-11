@@ -1,0 +1,9 @@
+[submodule "quarkus/sensor-simulator"]
+	path = quarkus/sensor-simulator
+	url = https://github.com/kubealex/sensor-simulator
+[submodule "quarkus/sensor-aggregator"]
+	path = quarkus/sensor-aggregator
+	url = https://github.com/kubealex/sensor-aggregator
+[submodule "quarkus/sensor-controller"]
+	path = quarkus/sensor-controller
+	url = https://github.com/kubealex/sensor-controller
