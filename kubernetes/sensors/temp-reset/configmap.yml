@@ -5,9 +5,9 @@ metadata:
   namespace: devconf-demo
 data:
   sensor.device-id: ext-01
-  sensor.humidity: '40'
+  sensor.humidity: '60'
   sensor.location: fridge-room-c1-outdoor
-  sensor.fixed-temperature: '33'
+  sensor.fixed-temperature: '29'
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -18,7 +18,7 @@ data:
   sensor.device-id: floor-01
   sensor.humidity: '25'
   sensor.location: fridge-room-c1-floor
-  sensor.fixed-temperature: '14'
+  sensor.fixed-temperature: '16'
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -27,6 +27,19 @@ metadata:
   namespace: devconf-demo
 data:
   sensor.device-id: int-01
-  sensor.humidity: '25'
+  sensor.humidity: '35'
   sensor.location: fridge-room-c1-indoor
-  sensor.fixed-temperature: '21'
+  sensor.fixed-temperature: '18'
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: iot-sensor-fridge
+  namespace: devconf-demo
+data:
+  sensor.device-id: fridge-01
+  sensor.location: fridge-room-c1-fridge
+  sensor.fixed-temperature: '-8'
+  sensor.fan-speed: '150'
+  sensor.power-consumption: '200'
+  sensor.eco-mode: 'true'
