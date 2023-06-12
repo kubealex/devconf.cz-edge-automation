@@ -1,0 +1,18 @@
+#!/bin/bash
+KUBECONFIG=$(pwd)/kubeconfig
+export KUBECONFIG=$(pwd)/kubeconfig
+check_logs() {
+	oc logs -n devconf-demo -f -l app=iot-eda
+}
+
+port_forward() {
+	oc port-forward -n devconf-demo service/influxdb 8086:8086
+}
+
+if [ $1 = "logs" ] 
+then
+check_logs
+elif [ $1 = "forward" ]
+then
+port_forward
+fi
