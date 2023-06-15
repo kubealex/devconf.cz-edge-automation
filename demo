@@ -9,10 +9,19 @@ port_forward() {
 	oc port-forward -n devconf-demo service/influxdb 8086:8086
 }
 
+temperature_reset() {
+oc apply -k kubernetes/sensors/temp-reset
+oc delete pod -l kind=sensors -n devconf-demo
+}
+
 if [ $1 = "logs" ] 
 then
 check_logs
 elif [ $1 = "forward" ]
 then
 port_forward
+elif [ $1 = "reset" ]
+then
+temperature_reset
 fi
+
