@@ -1,27 +1,76 @@
 #!/bin/bash
 KUBECONFIG=$(pwd)/kubeconfig
 export KUBECONFIG=$(pwd)/kubeconfig
-check_logs() {
-	oc logs -n devconf-demo -f -l app=iot-eda
+
+# Usage instructions
+usage() {
+  echo "Usage: $0 <argument>"
+  echo "Description: This is a support script to configure and perform actions for the demo."
+  echo "Valid arguments:"
+  echo "  configure:   Create the devconf-demo namespace and apply necessary configurations."
+  echo "  logs:        Check the logs of the iot-eda pods in the devconf-demo namespace."
+  echo "  port-forward:Forward the influxdb service port in the devconf-demo namespace."
+  echo "  reset:       Reset sensors temperatue and redeploy the pods in the devconf-demo namespace."
+  echo "  start:       Apply an increased sensors temperature to trigger automation and redeploy the pods in the devconf-demo namespace."
 }
 
-port_forward() {
-	oc port-forward -n devconf-demo service/influxdb 8086:8086
-}
-
-temperature_reset() {
-oc apply -k kubernetes/sensors/temp-reset
-oc delete pod -l kind=sensors -n devconf-demo
-}
-
-if [ $1 = "logs" ] 
-then
-check_logs
-elif [ $1 = "forward" ]
-then
-port_forward
-elif [ $1 = "reset" ]
-then
-temperature_reset
+# Check if argument is empty or doesn't match the specified cases
+if [ -z "$1" ] || [ "$1" != "logs" ] && [ "$1" != "port-forward" ] && [ "$1" != "reset" ] && [ "$1" != "start" ] && [ "$1" != "configure" ]; then
+  echo "Unknown argument '$1'"
+  usage
+  exit 1
 fi
 
+# Function to check logs
+check_logs() {
+  oc logs -n devconf-demo -f -l app=iot-eda
+}
+
+# Function to port forward
+port_forward() {
+  oc port-forward -n devconf-demo service/influxdb 8086:8086
+}
+
+# Function to increase temperature
+temperature_increase() {
+  oc apply -k kubernetes/sensors/temp-increase
+  oc delete pod -l kind=sensors -n devconf-demo
+}
+
+# Function to reset temperature
+temperature_reset() {
+  oc apply -k kubernetes/sensors/temp-reset
+  oc delete pod -l kind=sensors -n devconf-demo
+}
+
+# Function to configure devconf-demo
+configure() {
+  cat << EOF | oc apply -f -
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      labels:
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/audit-version: latest
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/enforce-version: latest
+        pod-security.kubernetes.io/warn: privileged
+        pod-security.kubernetes.io/warn-version: latest
+      name: devconf-demo
+EOF
+  oc adm policy add-scc-to-user -z eda-admin privileged -n devconf-demo
+  oc apply -k kubernetes
+}
+
+# Arg checker
+if [ "$1" = "logs" ]; then
+  check_logs
+elif [ "$1" = "port-forward" ]; then
+  port_forward
+elif [ "$1" = "reset" ]; then
+  temperature_reset
+elif [ "$1" = "start" ]; then
+  temperature_increase
+elif [ "$1" = "configure" ]; then
+  configure
+fi
